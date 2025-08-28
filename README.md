@@ -1,5 +1,5 @@
 
-🌟 Meezu Free Image Tool
+✨ Features of Meezu Free Image Tool
 
 Meezu Free Image Tool is a modern, all-in-one web application designed to simplify and enhance your image editing experience. With its clean UI, glassmorphic design, and smooth animations, it brings professional-grade editing tools right to your browser — no installations needed.
 
