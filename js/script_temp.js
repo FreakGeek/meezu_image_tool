@@ -1,5 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-            // --- UI Navigation and View Management ---
+            
+	function changeBackground() {
+  const backgroundContainer = document.getElementById('background-container');
+  const images = [
+    /*'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+    'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80',
+    'https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260' */
+	 './assets/bg_mountain.jpg',
+      './assets/bg_snow_house.jpg',
+      './assets/bg_image.jpeg'
+  ];
+  let currentImageIndex = 0;
+
+  function updateBackground() {
+  const nextImage = images[currentImageIndex];
+  const newBackground = document.createElement('div');
+  newBackground.className = 'background-image';
+  newBackground.style.backgroundImage = `url(${nextImage})`;
+
+  // Select the currently active background image
+  const activeImage = backgroundContainer.querySelector('.background-image.active');
+
+  // Fade out the old active image and remove it after the transition
+  if (activeImage) {
+    activeImage.classList.remove('active');
+    activeImage.addEventListener('transitionend', () => {
+      activeImage.remove();
+    }, {
+      once: true
+    });
+  }
+
+  // Append the new background image to the container
+  backgroundContainer.appendChild(newBackground);
+
+  // Fade in the new image after a brief delay to ensure the transition works
+  setTimeout(() => {
+    newBackground.classList.add('active');
+  }, 10);
+
+  // Update the index for the next image
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+}
+
+  // Load the first background immediately on page load
+  updateBackground();
+
+  // Set interval to change the background image every 5 seconds
+  // This is a good time for a slideshow; you can adjust it
+  setInterval(updateBackground, 7000);
+}
+
+// Start the background slideshow process
+changeBackground();
+	
+			
+			// --- UI Navigation and View Management ---
             const homeView = document.getElementById('home-view');
             const views = {
                 'compress-card': document.getElementById('compress-view'),
