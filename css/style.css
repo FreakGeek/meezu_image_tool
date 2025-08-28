@@ -1,0 +1,370 @@
+ /* General styling for the body */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Using a high-definition background image of a sunset on a beach */
+            background-image: url('https://images.pexels.com/photos/1761279/pexels-photo-1761279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed; /* Ensures the background doesn't scroll */
+            color: #f3f4f6; /* Lighter text for the dark background */
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Container for the moving images */
+        #photo-container {
+            position: fixed; /* Use fixed positioning so it doesn't scroll with content */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        /* Base class for all background photos */
+        .bg-photo {
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            opacity: 0; /* Initially transparent for fade-in */
+            transition: opacity 1s ease-in-out;
+            /* Changed the alpha value to 0.5 to make the shadow darker */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Adjusted alpha for a more prominent shadow */
+        }
+
+        /* Class to apply the final opacity once loaded */
+        .bg-photo.loaded {
+            /* Now full opacity */
+            opacity: 1;
+        }
+
+        /* Main container for the app content */
+        .main-container {
+            position: relative;
+            z-index: 1; /* Ensure main content is on top */
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            padding: 30px;
+            /* Added top padding for the content */
+            padding-top: 80px;
+        }
+
+        /* Position the logo at the top-left corner */
+        .branding-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Smaller, more suitable size for a corner logo */
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2; /* Ensure it's above other elements */
+        }
+
+        @media (max-width: 768px) {
+            .branding-logo {
+                top: 10px;
+                left: 10px;
+                width: 60px;
+            }
+        }
+
+        /* Glassmorphism card effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1); /* Adjusted for a more translucent look */
+            backdrop-filter: blur(20px); /* Increased blur for a stronger frosted effect */
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.6); /* Thinner, more subtle border */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); /* Lighter shadow */
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Back to Home button styling */
+        .back-button {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+        }
+        
+        h2 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e0e0e0;
+        }
+        
+        /* New CSS to force cards into a uniform size */
+        .feature-card {
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* Set a min-height to accommodate the longest description text */
+            min-height: 250px;
+            gap: 10px;
+            padding: 15px;
+        }
+        
+        .feature-card p {
+            font-size: 0.8rem;
+            color: #ccc;
+            /* Allow full text to show */
+            overflow: visible;
+            white-space: normal;
+            text-overflow: clip;
+            width: 100%;
+            flex-grow: 1; /* Allow the paragraph to take up available space */
+            display: flex;
+            align-items: flex-start; /* Align text to the top */
+        }
+        
+        /* Font Awesome icon styling for the cards */
+        .feature-card i {
+            color: #fff;
+            font-size: 5rem; /* Large icon size */
+            transition: transform 0.2s ease-in-out;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow to icons */
+        }
+        
+        .feature-card:hover i {
+            transform: scale(1.2);
+        }
+
+        /* File input styling */
+        .input-section input[type="file"] {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #f3f4f6;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .input-section input[type="file"]::file-selector-button {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #f3f4f6;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .input-section input[type="file"]::file-selector-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .controls-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Slider styling */
+        #quality-slider, #scale-factor-slider {
+            width: 80%;
+            margin-top: 10px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            height: 10px;
+            outline: none;
+        }
+
+        #quality-slider::-webkit-slider-thumb, #scale-factor-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #f3f4f6; /* Light thumb for contrast */
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #quality-value, #scale-factor-value {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-top: 5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Output section layout - Made it larger */
+        .output-section {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 30px; /* Increased padding */
+        }
+        
+        /* Loading indicator styling */
+        .loader {
+            border: 4px solid #d1d5db;
+            border-top: 4px solid #f3f4f6; /* White border-top for contrast */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Image comparison container */
+        .image-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* The containers for the images themselves now also have the glass effect */
+        .image-container.glass-card {
+            padding: 25px; /* Use the glass card padding */
+            background: rgba(255, 255, 255, 0.1); /* Adjusted for a more translucent look */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container.glass-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Image and canvas styling - Changed border to dotted */
+        .image-container img,
+        .image-container canvas {
+            max-width: 100%;
+            height: auto;
+            border: 1px dotted rgba(255, 255, 255, 0.4); /* Lighter border for contrast */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        /* Responsive layout for side-by-side view */
+        @media (min-width: 768px) {
+            .image-comparison {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .image-container {
+                flex: 1;
+            }
+        }
+
+        /* File size stats styling */
+        .file-stats {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            /* New, more visible color */
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .file-stats p {
+            font-size: 1rem;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        /* Updated modern UI color codes for stats - Soft pastels */
+        .file-stats .original-size { color: #f9a8d4; }
+        .file-stats .compressed-size { color: #6ee7b7; }
+        .file-stats .compression-percent { color: #93c5fd; }
+
+
+        /* Download button styling */
+        .tool-button {
+            /* Updated button colors for a modern look */
+            background: #dbeafe;
+            color: #1f2937;
+            font-weight: bold;
+            padding: 12px 24px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease, transform 0.2s ease;
+            text-shadow: none;
+            /* Added margin-top to create space */
+            margin-top: 20px;
+        }
+
+        .tool-button:hover {
+            background: #bfdbfe;
+            transform: translateY(-2px);
+        }
+
+        #status-message {
+            margin-top: 10px;
+            color: #fca5a5; /* A light warning color for dark background */
+            font-weight: bold;
+            text-shadow: none;
+        }
+
+        /* Utility classes to hide/show elements */
+        .hidden {
+            display: none;
+        }
+		
+		/* Cropper container specific styling */
+        .crop-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            max-height: 500px; /* Limit height to prevent huge images */
+            margin-bottom: 20px;
+        }
+
+        .crop-image-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }

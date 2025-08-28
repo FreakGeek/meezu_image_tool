@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Updated website title for the combined functionality -->
+    <title>Meezu Free Image Tool</title>
+    <!-- We will use a link to Google Fonts for Inter as it is a standard practice and is lightweight -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jsPDF for client-side PDF generation -->
+	  <!-- Cropper.js for image cropping functionality -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <link rel="stylesheet" href="css/style_meezu_hidden.css">
+</head>
+<body>
+     <!-- Branding logo placed at the top-left of the body -->
+	<img src="assets/brand_meezu.jpg" alt="Meezu Labs Logo" class="branding-logo">
+    <div id="photo-container">
+        <!-- Background images will be generated here by JavaScript -->
+    </div>
+
+    <!-- Main container for the application -->
+    <div class="main-container">
+        <!-- Back button, initially hidden -->
+        <button id="backButton" class="back-button hidden">Back to Home</button>
+
+        <!-- Home screen view, visible by default -->
+        <div id="home-view" class="view">
+            <!-- A dedicated container for the title to control its size and spacing -->
+            <div class="mb-12 md:mb-16">
+                <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Meezu Free Image Tool</h1>
+            </div>
+
+            <!-- Responsive grid for cards: 1 column on mobile, 2x2 on sm, 3x3 on md, 4x4 on lg -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 w-full">
+                <!-- Compress Image Card -->
+                <div id="compress-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Compress Image -->
+                    <i class="fa-solid fa-file-zipper"></i>
+                    <h2>Compress Image</h2>
+                    <p>Reduce the file size of your images for faster sharing and loading.</p>
+                </div>
+                <!-- Upscale Image Card -->
+                <div id="upscale-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Upscale Image -->
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    <h2>Upscale Image</h2>
+                    <p>Increase the resolution and dimensions of your photos without losing quality.</p>
+                </div>
+                <!-- Convert Image Card -->
+                <div id="convert-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Convert Image -->
+                    <i class="fa-solid fa-file-arrow-up"></i>
+                    <h2>Convert Image</h2>
+                    <p>Change the format of your image file.</p>
+                </div>
+                <!-- Resize Image Card -->
+                <div id="resize-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Resize Image -->
+                    <i class="fa-solid fa-expand"></i>
+                    <h2>Resize Image</h2>
+                    <p>Adjust the width and height of your image.</p>
+                </div>
+                <!-- Crop Image Card -->
+                <div id="crop-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Crop Image -->
+                    <i class="fa-solid fa-crop-simple"></i>
+                    <h2>Crop Image</h2>
+                    <p>Cut out a section of your image.</p>
+                </div>
+                <!-- Rotate Image Card -->
+                <div id="rotate-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Rotate Image -->
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <h2>Rotate Image</h2>
+                    <p>Adjust the width and height of your image.</p>
+                </div>
+                <!-- Add Watermark Card -->
+                <div id="watermark-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Add Watermark -->
+                    <i class="fa-solid fa-water"></i>
+                    <h2>Add Watermark</h2>
+                    <p>Add a text or logo watermark to your image.</p>
+                </div>
+                <!-- Blur Image Card -->
+                <div id="blur-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Blur Image -->
+                    <i class="fa-solid fa-eraser"></i>
+                    <h2>Blur Image</h2>
+                    <p>Apply a blur effect to your photo.</p>
+                </div>
+                <!-- Sharpen Image Card -->
+                <div id="sharpen-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Sharpen Image -->
+                    <i class="fa-solid fa-droplet"></i>
+                    <h2>Sharpen Image</h2>
+                    <p>Enhance the details and edges of your image.</p>
+                </div>
+                <!-- Black & White Card -->
+                <div id="bw-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for B&W -->
+                    <i class="fa-solid fa-camera-retro"></i>
+                    <h2>Black & White</h2>
+                    <p>Convert your colored image to black and white.</p>
+                </div>
+                <!-- Apply Filters Card -->
+                <div id="filter-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Apply Filters -->
+                    <i class="fa-solid fa-filter"></i>
+                    <h2>Apply Filters</h2>
+                    <p>Add various filters like vintage, sepia, etc.</p>
+                </div>
+                <!-- Merge Images Card -->
+                <div id="merge-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Merge Images -->
+                    <i class="fa-solid fa-object-group"></i>
+                    <h2>Merge Images</h2>
+                    <p>Combine multiple images into one.</p>
+                </div>
+                <!-- Split Image Card -->
+                <div id="split-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Split Image -->
+                    <i class="fa-solid fa-table-cells"></i>
+                    <h2>Split Image</h2>
+                    <p>Divide an image into smaller parts.</p>
+                </div>
+                <!-- Image Info Card -->
+                <div id="info-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Image Info -->
+                    <i class="fa-solid fa-circle-info"></i>
+                    <h2>Image Info</h2>
+                    <p>View detailed information about your image.</p>
+                </div>
+                <!-- Create Collage Card -->
+                <div id="collage-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for Create Collage -->
+                    <i class="fa-solid fa-images"></i>
+                    <h2>Create Collage</h2>
+                    <p>Design a beautiful photo collage.</p>
+                </div>
+                <!-- GIF Maker Card -->
+                <div id="gif-card" class="glass-card feature-card">
+                    <!-- Updated Font Awesome Icon for GIF Maker -->
+                    <i class="fa-solid fa-gift"></i>
+                    <h2>GIF Maker</h2>
+                    <p>Create an animated GIF from your images.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tool Views -->
+        <!-- Compress Image View -->
+        <div id="compress-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Compress Image</h1>
+            <div class="glass-card input-section">
+                <label for="compress-image-upload">Upload an Image:</label>
+                <input type="file" id="compress-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label for="quality-slider">Compression Level:</label>
+                <input type="range" id="quality-slider" min="10" max="100" value="80">
+                <span id="quality-value">80%</span>
+                <button id="compress-button" class="tool-button hidden">Compress Image</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="status-message" class="hidden"></div>
+                <div id="loader" class="loader hidden"></div>
+                <div id="comparison-container" class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <img id="original-image" alt="Original Image">
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Compressed Image</h2>
+                        <canvas id="output-canvas"></canvas>
+                    </div>
+                </div>
+                <div id="stats-container" class="file-stats">
+                    <p class="original-size">Original Size: <span id="original-size-value"></span></p>
+                    <p class="compressed-size">Compressed Size: <span id="compressed-size-value"></span></p>
+                    <p class="compression-percent">Compression: <span id="compression-percent-value"></span></p>
+                </div>
+                <button id="compress-download-button" class="tool-button hidden">Download Compressed Image</button>
+            </div>
+        </div>
+
+        <!-- Upscale Image View -->
+        <div id="upscale-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Upscale Image</h1>
+            <div class="glass-card input-section">
+                <label for="upscale-image-upload">Upload an Image:</label>
+                <input type="file" id="upscale-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label for="scale-factor-slider">Scale Factor:</label>
+                <input type="range" id="scale-factor-slider" min="1" max="10" value="2" step="0.5">
+                <span id="scale-factor-value">2x</span>
+                <button id="upscale-button" class="tool-button">Upscale Image</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="upscale-status-message" class="hidden"></div>
+                <div id="upscale-loader" class="loader hidden"></div>
+                <div id="upscale-comparison-container" class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Photo</h2>
+                        <span id="original-resolution"></span>
+                        <canvas id="original-upscale-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Upscaled Photo</h2>
+                        <span id="upscaled-resolution"></span>
+                        <canvas id="upscaled-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="upscale-download-button" class="tool-button hidden">Download Upscaled Image</button>
+            </div>
+        </div>
+
+        <!-- Convert Image View -->
+        <div id="convert-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Convert Image to PDF</h1>
+            <div class="glass-card input-section">
+                <label for="convert-image-upload">Upload an Image:</label>
+                <input type="file" id="convert-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <button id="convert-button" class="tool-button">Convert to PDF</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="convert-status-message" class="hidden"></div>
+                <div id="convert-loader" class="loader hidden"></div>
+                <div class="p-4 text-center">
+                    <p class="text-xl text-green-400">Conversion complete!</p>
+                </div>
+                <button id="convert-download-button" class="tool-button hidden">Download PDF</button>
+            </div>
+        </div>
+
+        <!-- Resize Image View -->
+        <div id="resize-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Resize Image</h1>
+            <div class="glass-card input-section">
+                <label for="resize-image-upload">Upload an Image:</label>
+                <input type="file" id="resize-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <label class="flex items-center gap-2 text-gray-300 font-semibold">
+                        Width:
+                        <input type="number" id="width-input" placeholder="Width" class="w-24 bg-gray-600 border border-gray-500 rounded-md p-2 text-white text-center">
+                    </label>
+                    <label class="flex items-center gap-2 text-gray-300 font-semibold">
+                        Height:
+                        <input type="number" id="height-input" placeholder="Height" class="w-24 bg-gray-600 border border-gray-500 rounded-md p-2 text-white text-center">
+                    </label>
+                </div>
+                <button id="resize-button" class="tool-button">Resize Image</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="resize-status-message" class="hidden"></div>
+                <div id="resize-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <canvas id="original-resize-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Resized Image</h2>
+                        <canvas id="resized-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="resize-download-button" class="tool-button hidden">Download Resized Image</button>
+            </div>
+        </div>
+		
+   <!-- Crop Image View -->
+        <div id="crop-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Crop Image</h1>
+            <div class="glass-card input-section">
+                <label for="crop-image-upload">Upload an Image:</label>
+                <input type="file" id="crop-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card output-section hidden" id="crop-output-section">
+                <div class="crop-image-container">
+                    <!-- This image element will be the target for Cropper.js -->
+                    <img id="crop-target-image" src="" alt="Image to crop">
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button id="crop-button" class="tool-button">Crop & Preview</button>
+                </div>
+                <div id="cropped-preview-container" class="glass-card output-section hidden">
+                    <h2>Cropped Preview</h2>
+                    <!-- The cropped image will be displayed here -->
+                    <img id="cropped-preview-image" src="" alt="Cropped Preview">
+                </div>
+                <button id="crop-download-button" class="tool-button hidden">Download Cropped Image</button>
+            </div>
+        </div>
+        
+
+        <!-- Rotate Image View -->
+        <div id="rotate-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Rotate Image</h1>
+            <div class="glass-card input-section">
+                <label for="rotate-image-upload">Upload an Image:</label>
+                <input type="file" id="rotate-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <div class="flex gap-4">
+                    <button id="rotate-left-button" class="tool-button"><i class="fa-solid fa-undo"></i> Rotate Left</button>
+                    <button id="rotate-right-button" class="tool-button"><i class="fa-solid fa-redo"></i> Rotate Right</button>
+                </div>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="rotate-status-message" class="hidden"></div>
+                <div id="rotate-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <canvas id="original-rotate-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Rotated Image</h2>
+                        <canvas id="rotated-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="rotate-download-button" class="tool-button hidden">Download Rotated Image</button>
+            </div>
+        </div>
+
+        <!-- Add Watermark View -->
+        <div id="watermark-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Add Watermark</h1>
+            <div class="glass-card input-section">
+                <label for="watermark-image-upload">Upload an Image:</label>
+                <input type="file" id="watermark-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label for="watermark-text-input">Watermark Text:</label>
+                <input type="text" id="watermark-text-input" placeholder="Your Watermark" class="bg-gray-600 border border-gray-500 rounded-md p-2 text-white text-center">
+                <button id="watermark-button" class="tool-button">Add Watermark</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="watermark-status-message" class="hidden"></div>
+                <div id="watermark-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <canvas id="original-watermark-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Watermarked Image</h2>
+                        <canvas id="watermarked-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="watermark-download-button" class="tool-button hidden">Download Watermarked Image</button>
+            </div>
+        </div>
+        
+        <!-- Black & White View -->
+        <div id="bw-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Black & White</h1>
+            <div class="glass-card input-section">
+                <label for="bw-image-upload">Upload an Image:</label>
+                <input type="file" id="bw-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <button id="bw-button" class="tool-button">Apply Black & White</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="bw-status-message" class="hidden"></div>
+                <div id="bw-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <canvas id="original-bw-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Black & White Image</h2>
+                        <canvas id="bw-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="bw-download-button" class="tool-button hidden">Download B&W Image</button>
+            </div>
+        </div>
+        
+        <!-- Apply Filters View -->
+        <div id="filter-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Apply Filters</h1>
+            <div class="glass-card input-section">
+                <label for="filter-image-upload">Upload an Image:</label>
+                <input type="file" id="filter-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label for="filter-select">Choose a Filter:</label>
+                <select id="filter-select" class="bg-gray-600 border border-gray-500 rounded-md p-2 text-white text-center">
+                    <option value="none">None</option>
+                    <option value="grayscale">Grayscale</option>
+                    <option value="sepia">Sepia</option>
+                    <option value="blur">Blur</option>
+                    <option value="invert">Invert</option>
+                </select>
+                <button id="filter-button" class="tool-button">Apply Filter</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="filter-status-message" class="hidden"></div>
+                <div id="filter-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <canvas id="original-filter-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Filtered Image</h2>
+                        <canvas id="filtered-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="filter-download-button" class="tool-button hidden">Download Filtered Image</button>
+            </div>
+        </div>
+
+        <!-- Image Info View -->
+        <div id="info-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Image Information</h1>
+            <div class="glass-card input-section">
+                <label for="info-image-upload">Upload an Image:</label>
+                <input type="file" id="info-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="info-status-message" class="hidden"></div>
+                <div id="info-loader" class="loader hidden"></div>
+                <div class="image-container glass-card">
+                    <h2>Uploaded Image</h2>
+                    <img id="info-image" alt="Uploaded Image">
+                </div>
+                <div id="info-details" class="file-stats">
+                    <p>Filename: <span id="info-filename"></span></p>
+                    <p>File Type: <span id="info-type"></span></p>
+                    <p>Size: <span id="info-size"></span></p>
+                    <p>Dimensions: <span id="info-dimensions"></span></p>
+                </div>
+            </div>
+        </div>
+		
+      <!-- Blur Image View -->
+        <div id="blur-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Blur Image</h1>
+            <div class="glass-card input-section">
+                <label for="blur-image-upload">Upload an Image:</label>
+                <input type="file" id="blur-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label for="blur-strength-slider">Blur Strength:</label>
+                <input type="range" id="blur-strength-slider" min="2" max="30" value="5" step="2">
+                <span id="blur-strength-value">5 px</span>
+                <button id="blur-button" class="tool-button hidden">Apply Blur</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="blur-status-message" class="hidden"></div>
+                <div id="blur-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <img id="blur-original-image" alt="Original Image">
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Blurred Image</h2>
+                        <canvas id="blur-output-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="blur-download-button" class="tool-button hidden">Download Blurred Image</button>
+            </div>
+        </div>
+		
+		 <!-- Sharpen Image View -->		
+		  <div id="sharpen-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Sharpen Image</h1>
+            <div class="glass-card input-section">
+                <label for="sharpen-image-upload">Upload an Image:</label>
+                <input type="file" id="sharpen-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label for="sharpen-strength-slider">Sharpening Strength:</label>
+                <input type="range" id="sharpen-strength-slider" min="0" max="100" value="50">
+                <span id="sharpen-strength-value">50%</span>
+                <button id="sharpen-button" class="tool-button hidden">Sharpen Image</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="sharpen-status-message" class="hidden"></div>
+                <div id="sharpen-loader" class="loader hidden"></div>
+                <div class="image-comparison">
+                    <div class="image-container glass-card">
+                        <h2>Original Image</h2>
+                        <canvas id="original-sharpen-canvas"></canvas>
+                    </div>
+                    <div class="image-container glass-card">
+                        <h2>Sharpened Image</h2>
+                        <canvas id="sharpen-output-canvas"></canvas>
+                    </div>
+                </div>
+                <button id="sharpen-download-button" class="tool-button hidden">Download Sharpened Image</button>
+            </div>
+        </div>
+		
+		   <!-- Merge Images View -->
+        <div id="merge-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Merge Images</h1>
+            <div class="glass-card input-section">
+                <label for="merge-image-upload">Upload Images (2 or more):</label>
+                <input type="file" id="merge-image-upload" accept="image/*" multiple>
+            </div>
+            <div class="glass-card controls-section">
+                <button id="merge-button" class="tool-button hidden">Merge Images</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="merge-status-message" class="hidden"></div>
+                <div id="merge-loader" class="loader hidden"></div>
+                <div class="image-container glass-card">
+                    <h2>Merged Image</h2>
+                    <canvas id="merge-output-canvas"></canvas>
+                </div>
+                <button id="merge-download-button" class="tool-button hidden">Download Merged Image</button>
+            </div>
+        </div>
+		
+		 <!-- Split Image View -->
+        <div id="split-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Split Image</h1>
+            <div class="glass-card input-section">
+                <label for="split-image-upload">Upload an Image:</label>
+                <input type="file" id="split-image-upload" accept="image/*">
+            </div>
+            <div class="glass-card controls-section">
+                <label>Split into rows x columns:</label>
+                <div class="flex items-center justify-center gap-4 mt-2">
+                    <input type="number" id="split-rows" value="2" min="1" class="bg-white/10 border border-white/20 rounded-md p-2 text-white placeholder-gray-400 w-20 text-center">
+                    <div class="text-white">x</div>
+                    <input type="number" id="split-cols" value="2" min="1" class="bg-white/10 border border-white/20 rounded-md p-2 text-white placeholder-gray-400 w-20 text-center">
+                </div>
+                <button id="split-button" class="tool-button hidden">Split Image</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="split-status-message" class="hidden"></div>
+                <div id="split-loader" class="loader hidden"></div>
+                <div class="image-container glass-card grid grid-cols-2 md:grid-cols-4 gap-4" id="split-output-container">
+                    <!-- Split images will be appended here -->
+                </div>
+                <button id="split-download-all-button" class="tool-button hidden">Download All Pieces as ZIP</button>
+            </div>
+        </div>
+		
+		 <!-- Create Collage View -->
+        <div id="collage-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Create Collage</h1>
+            <div class="glass-card input-section">
+                <label for="collage-image-upload">Upload Images (2 or more):</label>
+                <input type="file" id="collage-image-upload" accept="image/*" multiple>
+            </div>
+            <div class="glass-card controls-section">
+                <button id="collage-button" class="tool-button hidden">Create Collage</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="collage-status-message" class="hidden"></div>
+                <div id="collage-loader" class="loader hidden"></div>
+                <div class="image-container glass-card">
+                    <h2>Collage</h2>
+                    <canvas id="collage-output-canvas"></canvas>
+                </div>
+                <button id="collage-download-button" class="tool-button hidden">Download Collage</button>
+            </div>
+        </div>
+		
+		 <!-- GIF Maker View -->
+         <div id="gif-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">GIF Maker</h1>
+            <div class="glass-card input-section">
+                <label for="gif-image-upload">Upload Images for GIF (2 or more):</label>
+                <input type="file" id="gif-image-upload" accept="image/*" multiple>
+            </div>
+            <div class="glass-card controls-section">
+                <label for="gif-delay">Frame Delay (ms):</label>
+                <input type="number" id="gif-delay" value="200" min="50" max="2000" class="bg-white/10 border border-white/20 rounded-md p-2 text-white w-32 text-center mt-2">
+                
+                <label for="gif-effect" class="mt-4">Apply an Effect:</label>
+                <select id="gif-effect" class="bg-white/10 border border-white/20 rounded-md p-2 text-white w-48 text-center mt-2">
+                    <option value="none">None</option>
+                    <option value="grayscale">Grayscale</option>
+                    <option value="sepia">Sepia</option>
+                    <option value="invert">Invert</option>
+                </select>
+
+                <button id="gif-button" class="tool-button hidden">Create GIF</button>
+            </div>
+            <div class="glass-card output-section hidden">
+                <div id="gif-status-message" class="hidden"></div>
+                <div id="gif-loader" class="loader hidden"></div>
+                <div class="image-container glass-card">
+                    <h2>Generated GIF</h2>
+                    <img id="gif-output-image" alt="Generated GIF">
+                </div>
+                <button id="gif-download-button" class="tool-button hidden">Download GIF</button>
+            </div>
+        </div>
+
+        
+        <!-- Placeholder View for complex features -->
+        <div id="placeholder-view" class="view hidden space-y-12">
+            <h1 style="font-size: 3rem !important; text-shadow: 0 0 15px rgba(0, 0, 0, 0.9);">Coming Soon</h1>
+            <div class="glass-card p-8">
+                <p class="text-xl text-gray-300">This feature is under development and will be available soon. Stay tuned!</p>
+            </div>
+        </div>
+        
+    </div>
+ 
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
