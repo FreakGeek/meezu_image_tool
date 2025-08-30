@@ -92,3 +92,5 @@ Get detailed information: filename, format, size, resolution.
 ✔️ Cross-platform: Works seamlessly on desktop and mobile.
 
 👉 Perfect for designers, students, photographers, and everyday users who need quick, reliable, and stylish image editing — all for free.
+
+Here is the link to the tool page : https://freakgeek.github.io/meezu_image_tool/
